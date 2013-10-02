@@ -130,12 +130,13 @@ public class Run {
 	    private int seed = 20;
 	    
 	    public void map(Object key, Text value, Context context) throws IOException, InterruptedException {
-	        String line=value.toString();
+	        String line = value.toString();
 	      
             Configuration conf = new Configuration();
             FileSystem fileSystem = FileSystem.get(conf);
 
             Path path = new Path(line);
+
             if (!fileSystem.exists(path)) {
                 System.out.println("File does not exists");
                 return;
@@ -162,7 +163,7 @@ public class Run {
 	        context.setStatus("About to read in the arff file");
 	        readArff(fs, line);
 	      
-	        context.setStatus("arff complete, initialising aggregateable eval");
+	        context.setStatus("arff complete, initializing aggregateable eval");
 
             try {
 			    eval = new AggregateableEvaluation(randData);
@@ -353,7 +354,7 @@ public class Run {
 	    job.setOutputKeyClass(Text.class);
 	    //job.setOutputValueClass(weka.classifiers.trees.J48.class);
 	    	
-	    job.setOutputValueClass(AggregateableEvaluation.class);
+	    //job.setOutputValueClass(AggregateableEvaluation.class);
 	    
 	    //Set the input and output directories
 	    FileInputFormat.addInputPath(job, new Path(args[2]));
