@@ -22,7 +22,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.StringTokenizer;
-import java.util.List;
+import java.util.List; 
 
 import org.apache.hadoop.mapred.JobConf;
 import org.apache.hadoop.mapreduce.lib.input.FileSplit;
@@ -352,9 +352,9 @@ public class Run {
 	    
 	    //This sections set the values of the <K2, V2>
 	    job.setOutputKeyClass(Text.class);
-	    //job.setOutputValueClass(weka.classifiers.trees.J48.class);
+	    job.setOutputValueClass(weka.classifiers.trees.J48.class);
 	    	
-	    //job.setOutputValueClass(AggregateableEvaluation.class);
+	    job.setOutputValueClass(AggregateableEvaluation.class);
 	    
 	    //Set the input and output directories
 	    FileInputFormat.addInputPath(job, new Path(args[2]));

@@ -2,3 +2,6 @@
 src/weka-test.jar
 .DS_Store
 .idea
+.classpath
+.metadata
+.project

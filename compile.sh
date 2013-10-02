@@ -43,5 +43,6 @@ echo "Complete."
 pushd src/
 
 echo "Executing program."
+chmod +x weka-test.jar
 # Run the JAR here? Just don't lost this command...
 hadoop jar weka-test.jar Run 10 weka.classifiers.trees.J48 /home/ubuntu/Workspace/hadoop-1.1.0/hadoop-data/slug.arff /home/ubuntu/Workspace/hadoop-1.1.0/hadoop-data/output/
