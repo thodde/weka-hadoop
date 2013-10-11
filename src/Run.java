@@ -1,42 +1,87 @@
 import weka.core.Instance;
+import weka.core.InstanceComparator;
 import weka.core.Instances;
 import weka.core.converters.ArffLoader.ArffReader;
+import weka.core.converters.ConverterUtils.DataSource;
 import weka.core.Utils;
 import weka.classifiers.AbstractClassifier;
 import weka.classifiers.AggregateableEvaluation;
 import weka.classifiers.Classifier;
 import weka.classifiers.Evaluation;
 
+import java.io.BufferedInputStream;
 import java.io.BufferedReader;
+import java.io.Console;
 import java.io.DataInputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.StringTokenizer;
 import java.util.List;
 
-import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.mapred.JobConf;
 import org.apache.hadoop.mapreduce.lib.input.FileSplit;
 import org.apache.hadoop.mapreduce.InputSplit;
 import org.apache.hadoop.mapreduce.JobContext;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.BlockLocation;
+import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
+import org.apache.hadoop.io.BytesWritable;
+import org.apache.hadoop.io.IOUtils;
+import org.apache.hadoop.io.NullWritable;
+import org.apache.hadoop.io.RawComparator;
 import org.apache.hadoop.io.Text;
+import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.mapreduce.Job;
+import org.apache.hadoop.mapreduce.JobContext;
 import org.apache.hadoop.mapreduce.JobID;
 import org.apache.hadoop.mapreduce.Mapper;
+import org.apache.hadoop.mapreduce.InputFormat;
+import org.apache.hadoop.mapreduce.RecordReader;
+import org.apache.hadoop.mapreduce.TaskAttemptContext;
 import org.apache.hadoop.mapreduce.TaskAttemptID;
+import org.apache.hadoop.mapreduce.TaskID;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
+import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
+//import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
+import org.apache.hadoop.util.GenericOptionsParser;
+import org.apache.hadoop.mapreduce.InputSplit;
 
+import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileStatus;
+import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.IntWritable;
+import org.apache.hadoop.io.Text;
 
 import org.apache.hadoop.mapreduce.Reducer;
+import org.apache.hadoop.mapreduce.Mapper.Context;
 
+import org.apache.hadoop.mapreduce.lib.input.FileSplit;
+import org.apache.hadoop.fs.FSDataInputStream;
+import org.apache.hadoop.fs.FSDataOutputStream;
+import org.apache.hadoop.fs.FileSystem;
+import org.apache.hadoop.fs.FileStatus;
+import org.apache.hadoop.fs.BlockLocation;
+import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.fs.Path;
+import org.apache.hadoop.io.Text;
+import org.apache.hadoop.io.LongWritable;
+import org.apache.hadoop.mapreduce.Job;
+import org.apache.hadoop.mapreduce.JobContext;
+import org.apache.hadoop.mapreduce.Mapper;
+import org.apache.hadoop.mapreduce.InputFormat;
+import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
+import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
+import org.apache.hadoop.util.GenericOptionsParser;
+import org.apache.hadoop.mapreduce.InputSplit;
 
 
 public class Run {
@@ -299,12 +344,9 @@ public class Run {
 	}
 	
 	public static void main(String[] args) throws Exception {
-		String[] overwrite_args = {"10", "weka.classifiers.trees.J48", "slug.arff", "output"};
 		Configuration conf = new Configuration();
 	    
-		//TODO: Solve this issue later....
-		//if (args.length != 4) {
-		if (overwrite_args.length != 4) {
+		if (args.length != 4) {
 	      System.err.println("Usage: run #splits classifier <in> <out>");
 	      System.exit(1);
 	    }
