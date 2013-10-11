@@ -9,6 +9,7 @@ then
 fi
 
 echo "Copying class files..."
+mkdir -p src/output
 cp src/*.class src/output/
 
 echo "Building JAR file..."
