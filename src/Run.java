@@ -350,8 +350,8 @@ public class Run {
 	      System.err.println("Usage: run #splits classifier <in> <out>");
 	      System.exit(1);
 	    }
-	    conf.setInt("Run-num.splits", Integer.parseInt(overwrite_args[0]));
-	    conf.setStrings("Run.classify", overwrite_args[1]);
+	    conf.setInt("Run-num.splits", Integer.parseInt(args[0]));
+	    conf.setStrings("Run.classify", args[1]);
 	    conf.set("io.serializations","org.apache.hadoop.io.serializer.JavaSerialization," + "org.apache.hadoop.io.serializer.WritableSerialization");
 	    
 	    Job job = new Job(conf, "WEKA-MapReduce");
@@ -367,8 +367,8 @@ public class Run {
 	    job.setOutputValueClass(AggregateableEvaluation.class);
 	    
 	    //Set the input and output directories
-	    FileInputFormat.addInputPath(job, new Path(overwrite_args[2]));
-	    FileOutputFormat.setOutputPath(job, new Path(overwrite_args[3]));
+	    FileInputFormat.addInputPath(job, new Path(args[2]));
+	    FileOutputFormat.setOutputPath(job, new Path(args[3]));
 	    
 	    //Set the input type of the environment
 	    //In this case we are overriding TextInputFormat
