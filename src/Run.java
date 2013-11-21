@@ -8,6 +8,7 @@ import weka.classifiers.AbstractClassifier;
 import weka.classifiers.AggregateableEvaluation;
 import weka.classifiers.Classifier;
 import weka.classifiers.Evaluation;
+import weka.classifiers.trees.j48.*;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -306,8 +307,8 @@ public class Run {
 				}
 				
 				try {
-					//System.out.println("This is the map result");
-					//System.out.println(aggEval.toMatrixString());
+					System.out.println("This is the map result");
+					System.out.println(aggEval.toMatrixString());
 				}
                 catch (Exception e) {
 					e.printStackTrace();

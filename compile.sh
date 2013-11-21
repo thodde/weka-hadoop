@@ -15,7 +15,8 @@ echo "Removing old output directory..."
 hadoop fs -rmr /home/ubuntu/Workspace/hadoop-1.1.0/hadoop-data/output
 
 echo "Adding required JARs to classpath and compiling sources..."
-javac -classpath ./:./lib/commons-logging-1.1.2.jar:./lib/weka.jar:./lib/hadoop-1.2.1/hadoop-core-1.2.1.jar ./src/Run.java
+export CLASSPATH=./:./lib/commons-logging-1.1.2.jar:./lib/weka.jar:./lib/hadoop-1.2.1/hadoop-core-1.2.1.jar
+javac -classpath $CLASSPATH ./src/Run.java
 
 if [ $? -eq 0 ]
 then
@@ -45,4 +46,4 @@ pushd src/
 echo "Executing program."
 chmod +x weka-test.jar
 # Run the JAR here? Just don't lost this command...
-hadoop jar weka-test.jar Run 10 weka.classifiers.trees.J48 /home/ubuntu/Workspace/hadoop-1.1.0/hadoop-data/slug.arff /home/ubuntu/Workspace/hadoop-1.1.0/hadoop-data/output/
+hadoop jar weka-test.jar Run 10 weka.classifiers.trees.J48 /home/ubuntu/Workspace/hadoop-1.1.0/hadoop-data/slug.arff /home/ubuntu/Workspace/hadoop-1.1.0/hadoop-data/output/ 
