@@ -155,11 +155,13 @@ public class Run {
 	    
 	    public void map(Object key, Text value, Context context) throws IOException, InterruptedException {
 	        String line = value.toString();
+			line = "/home/ubuntu/Workspace/hadoop-1.1.0/hadoop-data/spambase_processed.arff";
 	      
             Configuration conf = new Configuration();
             FileSystem fileSystem = FileSystem.get(conf);
 
-            Path path = new Path(line);
+			Path path = new Path("/home/ubuntu/Workspace/hadoop-1.1.0/hadoop-data/spambase_processed.arff");
+            //Path path = new Path(line);
 
             // Make sure the file exists...
             if (!fileSystem.exists(path)) {
