@@ -10,7 +10,7 @@
 # 	- Executes the program
 #
 
-declare -r DATASET=${1:-player_regular_season.txt}
+declare DATASET=${1:-player_regular_season.txt}
 
 # Remove old data set
 echo "Removing old data set..."
@@ -18,7 +18,7 @@ hadoop fs -rmr /home/ubuntu/Workspace/hadoop-1.1.0/hadoop-data/$DATASET
 
 # Upload most recent data set
 echo "Uploading latest data set..."
-hadoop fs -put src/$DATASET /home/ubuntu/Workspace/hadoop-1.1.0/hadoop-data/
+hadoop fs -put bin/$DATASET /home/ubuntu/Workspace/hadoop-1.1.0/hadoop-data/
 
 # Remove old output if it exists
 echo "Removing old output directory..."
@@ -56,4 +56,4 @@ pushd src/
 echo "Executing program."
 chmod +x weka-test.jar
 # Run the JAR here? Just don't lost this command...
-hadoop jar weka-test.jar Run 10 weka.classifiers.trees.J48 /home/ubuntu/Workspace/hadoop-1.1.0/hadoop-data/slug.arff /home/ubuntu/Workspace/hadoop-1.1.0/hadoop-data/output/ 
+hadoop jar weka-test.jar Run 10 weka.classifiers.bayes.NaiveBayes /home/ubuntu/Workspace/hadoop-1.1.0/hadoop-data/$DATASET /home/ubuntu/Workspace/hadoop-1.1.0/hadoop-data/output/ 

@@ -139,6 +139,8 @@ public class Run {
 	 * @author Trevor Hodde
 	 */
 	public static class WekaMap extends Mapper<Object, Text, Text, AggregateableEvaluation> {
+		public static final log LOG = LogFactory.getLog(Mapper.class);
+
 	    private Instances randData = null;
 	    private Classifier cls = null;
 
@@ -278,6 +280,7 @@ public class Run {
 	        System.out.println("The value of Eval time: " + evalTime);
 	          
 	        context.write(new Text(line), eval);
+			LOG.info("IM USING A LOGGER!!!!");
 	      }
 	    
 	    /**
