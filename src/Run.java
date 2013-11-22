@@ -186,6 +186,8 @@ public class Run {
 	      
 	        FileSystem fs = FileSystem.get(context.getConfiguration());
 
+			System.out.println("PATH: " + path);
+
 	        // Read in the data set
 	        context.setStatus("Reading in the arff file...");
 	        readArff(fs, line);
@@ -307,12 +309,14 @@ public class Run {
 	    	  ArffReader arff;
 	    	  Instance inst;
 	    	  Instances data;
-	    		    	
+	    		 
+		  	  System.out.println("filePath: " + filePath);
+	
 	    	  try {
 	    		  // Read in the data using a ton of wrappers
 	    		  d = new DataInputStream(fs.open(new Path(filePath)));
 			      reader = new BufferedReader(new InputStreamReader(d));
-			      arff = new ArffReader(reader, 1000);
+			      arff = new ArffReader(reader, 100000);
 			      data = arff.getStructure();
 			      data.setClassIndex(data.numAttributes() - 1);
 			    

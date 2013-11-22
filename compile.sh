@@ -10,15 +10,44 @@
 # 	- Executes the program
 #
 
-declare DATASET=${1:-player_regular_season.txt}
+declare DATASET=${1:-spambase_processed.arff}
+declare OVERWRITE=${2:-0}
+declare data_exists=1
 
-# Remove old data set
-echo "Removing old data set..."
-hadoop fs -rmr /home/ubuntu/Workspace/hadoop-1.1.0/hadoop-data/$DATASET
+# Check for existance of old dataset
+echo "Checking if dataset already exists..."
+hadoop fs -test -e /home/ubuntu/Workspace/hadoop-1.1.0/hadoop-data/$DATASET
 
-# Upload most recent data set
-echo "Uploading latest data set..."
-hadoop fs -put bin/$DATASET /home/ubuntu/Workspace/hadoop-1.1.0/hadoop-data/
+if [ $? -eq 0 ]
+then
+	data_exists=0
+fi
+
+if [[ $OVERWITE -eq 1 ]]
+then
+	if [[ $data_exists -eq 0 ]]
+	then
+		echo "Dataset exists but will be overwritten!"
+		echo "Removing old data set..."
+		hadoop fs -rmr /home/ubuntu/Workspace/hadoop-1.1.0/hadoop-data/$DATASET
+
+		# Upload most recent data set
+		echo "Uploading latest data set..."
+		hadoop fs -put bin/$DATASET /home/ubuntu/Workspace/hadoop-1.1.0/hadoop-data/
+	else
+		echo "Dataset does not exist. Uploading..."
+		hadoop fs -put bin/$DATASET /home/ubuntu/Workspace/hadoop-1.1.0/hadoop-data/
+	fi
+else
+	if [[ $data_exists -ne 0 ]]
+	then
+		echo "Need to reupload data!"
+		hadoop fs -put bin/$DATASET /home/ubuntu/Workspace/hadoop-1.1.0/hadoop-data/
+	else
+		echo "Dataset exists, not uploading again to save time."
+		echo
+	fi 
+fi
 
 # Remove old output if it exists
 echo "Removing old output directory..."
