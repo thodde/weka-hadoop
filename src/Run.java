@@ -90,11 +90,20 @@ import org.apache.hadoop.mapreduce.InputSplit;
  */
 public class Run {
 	public static class WekaInputFormat extends TextInputFormat {
+		/**
+		 * Takes a JobContext and returns a list of data split into pieces
+		 * Basically this is a way of handling large data sets. This method allows
+		 * us to split a large data set into smaller chunks to pass across worker nodes
+		 * (or in our case, just to make life a little easier and pass the chunks to a single
+		 * node so that it is not overwhelmed by one large data set)
+		 * 
+		 * @see org.apache.hadoop.mapreduce.lib.input.FileInputFormat#getSplits
+		 * (org.apache.hadoop.mapreduce.JobContext)
+		 */
 	    public List<InputSplit> getSplits(JobContext job) throws IOException {
 	        long minSize = Math.max(getFormatMinSplitSize(), getMinSplitSize(job));
 	        long maxSize = getMaxSplitSize(job);
-
-	        // generate splits
+	        
 	        List<InputSplit> splits = new ArrayList<InputSplit>();
 	        for (FileStatus file: listStatus(job)) {
 	            Path path = file.getPath();
@@ -104,14 +113,17 @@ public class Run {
                 long length = file.getLen();
 	            BlockLocation[] blkLocations = fs.getFileBlockLocations(file, 0, length);
 
+	            // make sure this is actually a valid file
 	            if(length != 0) {
+	            	// set the number of splits to make. NOTE: the value can be changed to anything
 	                int count = job.getConfiguration().getInt("Run-num.splits", 1);
 	                for(int t = 0; t < count; t++) {
-	                    splits.add(new FileSplit(path, 0, length, blkLocations[0].getHosts())); //one file on split
+	                	//split the file and add each chunk to the list
+	                    splits.add(new FileSplit(path, 0, length, blkLocations[0].getHosts())); 
                     }
 	            }
                 else {
-	                //Create empty hosts array for zero length files
+	                // Create empty array for zero length files
 	                splits.add(new FileSplit(path, 0, length, new String[0]));
 	            }
 	        }
@@ -119,6 +131,13 @@ public class Run {
 	    }
 	}	
 	
+	/**
+	 * This class is a mapper for the weka classifiers
+	 * It is given a chunk of data and it sets up a classifier to run on that data.
+	 * There is a lot of other handling that occurs in the method as well.
+	 * 
+	 * @author Trevor Hodde
+	 */
 	public static class WekaMap extends Mapper<Object, Text, Text, AggregateableEvaluation> {
 	    private Instances randData = null;
 	    private Classifier cls = null;
@@ -126,7 +145,11 @@ public class Run {
 	    private AggregateableEvaluation eval = null;
 	    private Classifier clsCopy = null;
 	    
+	    // Run 10 mappers
 	    private String numMaps = "10";
+	    
+	    // TODO: Make sure this is not hard-coded -- preferably a command line arg
+	    // Set the classifier
 	    private String classname = "weka.classifiers.lazy.IBk";
 	    private int seed = 20;
 	    
@@ -138,6 +161,7 @@ public class Run {
 
             Path path = new Path(line);
 
+            // Make sure the file exists...
             if (!fileSystem.exists(path)) {
                 System.out.println("File does not exists");
                 return;
@@ -146,6 +170,7 @@ public class Run {
     	    JobID test = context.getJobID();
 	        TaskAttemptID tid = context.getTaskAttemptID();
 	      
+	        // Set up the weka configuration
 	        Configuration wekaConfig = context.getConfiguration();
 	        numMaps = wekaConfig.get("Run-num.splits");
 	        classname = wekaConfig.get("Run.classify");
@@ -161,10 +186,10 @@ public class Run {
 	      
 	        FileSystem fs = FileSystem.get(context.getConfiguration());
 
-	        context.setStatus("About to read in the arff file");
+	        // Read in the data set
+	        context.setStatus("Reading in the arff file...");
 	        readArff(fs, line);
-	      
-	        context.setStatus("arff complete, initializing aggregateable eval");
+	        context.setStatus("Done reading arff! Initializing aggregateable eval...");
 
             try {
 			    eval = new AggregateableEvaluation(randData);
@@ -173,10 +198,13 @@ public class Run {
 			    e1.printStackTrace();
 	        }
 	      
+            // Split the data into two sets: Training set and a testing set
+            // this will allow us to use a little bit of data to train the classifier
+            // before running the classifier on the rest of the dataset
 	        Instances trainInstance = randData.trainCV(Integer.parseInt(numMaps), n);
 	        Instances testInstance = randData.testCV(Integer.parseInt(numMaps), n);
 	      
-	        //Using IBk
+	        // Set parameters to be passed to the classifiers
 	        String[] opts = new String[3];
 	        if (classname.equals("weka.classifiers.lazy.IBk")) {
 		        opts[0] = "";
@@ -194,13 +222,15 @@ public class Run {
 		        opts[2] = "";
 	        }
 	      
+	        // Start setting up the classifier and its various options
 	        try {
-			  cls = (Classifier) Utils.forName(Classifier.class,classname,opts);
+			  cls = (Classifier) Utils.forName(Classifier.class, classname, opts);
 	        }
 	        catch (Exception e) {
 			    e.printStackTrace();
 	        }
 	      
+	        // These are all used for timing different processes
 	        long beforeAbstract = 0;
 	        long beforeBuildClass = 0;
 	        long afterBuildClass = 0;
@@ -208,35 +238,41 @@ public class Run {
 	        long afterEvalClass = 0;
 	      
 	        try {
-	    	    context.setStatus("About to create the classifier");
+	        	// Create the classifier and record how long it takes to set up 
+	    	    context.setStatus("Creating the classifier...");
 	    	    System.out.println(new Timestamp(System.currentTimeMillis()));
 	    	    beforeAbstract = System.currentTimeMillis();
 	    	    clsCopy = AbstractClassifier.makeCopy(cls);
 	    	    beforeBuildClass = System.currentTimeMillis();
 	    	    System.out.println(new Timestamp(System.currentTimeMillis()));
 		      
-	    	    context.setStatus("Training the classifier");
+	    	    // Train the classifier on the training set and record how long this takes
+	    	    context.setStatus("Training the classifier...");
 	    	    clsCopy.buildClassifier(trainInstance);
 		        afterBuildClass = System.currentTimeMillis();
 		        System.out.println(new Timestamp(System.currentTimeMillis()));
 		        beforeEvalClass = System.currentTimeMillis();
 		      
-		        context.setStatus("Evaluating the model");
+		        // Run the classifer on the rest of the data set and record its duration as well
+		        context.setStatus("Evaluating the model...");
 		        eval.evaluateModel(clsCopy, testInstance);
 		        afterEvalClass = System.currentTimeMillis();
 		        System.out.println(new Timestamp(System.currentTimeMillis()));
 
+		        // We are done!
 		        context.setStatus("Complete");
 	        }
 	        catch (Exception e) {
-	    	    System.out.println("Debugging strarts here");
+	    	    System.out.println("Debugging strarts here!");
 	    	    e.printStackTrace();
 	        }
 	      
+	        // calculate the total times for each section
 	        long abstractTime = beforeBuildClass - beforeAbstract;
 	        long buildTime = afterBuildClass - beforeBuildClass;
 	        long evalTime = afterEvalClass - beforeEvalClass;
 	      
+	        // Print out the times
 	        System.out.println("The value of abstract time: " + abstractTime);
 	        System.out.println("The value of Build time: " + buildTime);
 	        System.out.println("The value of Eval time: " + evalTime);
@@ -244,9 +280,22 @@ public class Run {
 	        context.write(new Text(line), eval);
 	      }
 	    
+	    /**
+	     * This can be used to write out the results on HDFS, but it is not essential
+	     * to the success of this project. If time allows, we can implement it.
+	     */
 	      public void writeResult()	{    }
 	    
 	    
+	      /**
+	       * This method reads in the arff file that is provided to the program.
+	       * Nothing really special about the way the data is handled.
+	       * 
+	       * @param fs
+	       * @param filePath
+	       * @throws IOException
+	       * @throws InterruptedException
+	       */
 	      public void readArff(FileSystem fs, String filePath) throws IOException, InterruptedException {
 	    	  BufferedReader reader;
 	    	  DataInputStream d;
@@ -255,12 +304,14 @@ public class Run {
 	    	  Instances data;
 	    		    	
 	    	  try {
+	    		  // Read in the data using a ton of wrappers
 	    		  d = new DataInputStream(fs.open(new Path(filePath)));
 			      reader = new BufferedReader(new InputStreamReader(d));
 			      arff = new ArffReader(reader, 1000);
 			      data = arff.getStructure();
 			      data.setClassIndex(data.numAttributes() - 1);
 			    
+			      // Add each line to the input stream
 			      while ((inst = arff.readInstance(data)) != null) {
 			          data.add(inst);
 			      }
@@ -271,6 +322,8 @@ public class Run {
 			      randData = new Instances(data);
 			      randData.randomize(rand);
 
+			      // This is how weka handles the sampling of the data
+			      // the stratify method splits up the data to cross validate it
                   if (randData.classAttribute().isNominal()) {
 			          randData.stratify(Integer.parseInt(numMaps));
                   }
@@ -278,9 +331,16 @@ public class Run {
 	    	  catch (IOException e) {
 	    		  e.printStackTrace();
 	    	  }
-	      }
+	    }
 	}
 	
+	/**
+	 * This class is a reducer for the output from the weka classifiers
+	 * It is given bunch of cross-validated data chunks from the mappers and its
+	 * job is to aggregate the data into one solution.
+	 *
+	 * @author James Forkey
+	 */
 	public static class WekaReducer extends Reducer<Text, AggregateableEvaluation, Text, IntWritable> {
 		private Text result = new Text();
 		private Evaluation evalAll = null;
@@ -288,12 +348,22 @@ public class Run {
 		
 		private AggregateableEvaluation aggEval;
 			
-		public void reduce(Text key, Iterable<AggregateableEvaluation> values, Context context) throws IOException, InterruptedException {
-		
+		/**
+		 * The reducer method takes all the stratified, cross-validated
+		 * values from the mappers in a list and uses an aggregatable evaluation to consolidate
+		 * them.
+		 */
+		public void reduce(Text key, Iterable<AggregateableEvaluation> values, Context context) throws IOException, InterruptedException {		
 			int sum = 0;
+			
+			// record how long it takes to run the aggregation
 			System.out.println(new Timestamp(System.currentTimeMillis()));
 			long beforeReduceTime = System.currentTimeMillis();
+			
+			// loop through each of the values and "aggregate"
+			// which basically means to consolidate the values
 			for (AggregateableEvaluation val : values) {
+				// The first time through, give aggEval a value
 				if (sum == 0) {
 					try {
 						aggEval = val;
@@ -303,10 +373,12 @@ public class Run {
 					}
 				}
 				else {
+					// combine the values
 					aggEval.aggregate(val);
 				}
 				
 				try {
+					// This is what is taken from the mapper to be aggregated
 					System.out.println("This is the map result");
 					System.out.println(aggEval.toMatrixString());
 				}
@@ -317,54 +389,71 @@ public class Run {
 				sum += 1;
 			}
 			
+			// Here is where the typical weka matrix output is generated
 			try {
-				//System.out.println("This is reduce matrix");
+				System.out.println("This is reduce matrix");
 				//System.out.println(aggEval.toMatrixString());
 			}
             catch (Exception e) {
 				e.printStackTrace();
 			}
 			
+			// calculate the duration of the aggregation
 			context.write(key, new IntWritable(sum));
 			long afterReduceTime = System.currentTimeMillis();
 			long reduceTime = afterReduceTime - beforeReduceTime;
+			
+			// display the output
 			System.out.println("The value of reduce time is: " + reduceTime);
 			System.out.println(new Timestamp(System.currentTimeMillis()));
 		}
 	}
 	
+	/**
+	 * The main method of this program. 
+	 * Precondition: arff file is uploaded into HDFS and the correct
+	 * number of parameters were passed into the JAR file when it was run
+	 * 
+	 * @param args
+	 * @throws Exception
+	 */
 	public static void main(String[] args) throws Exception {
 		Configuration conf = new Configuration();
 	    
+		// Make sure we have the correct number of arguments passed into the program
 		if (args.length != 4) {
-	      System.err.println("Usage: run #splits classifier <in> <out>");
+	      System.err.println("Usage: run #splits classifier <input file> <output file>");
 	      System.exit(1);
 	    }
-
+		
+		// configure the job using the command line args
 	    conf.setInt("Run-num.splits", Integer.parseInt(args[0]));
 	    conf.setStrings("Run.classify", args[1]);
-	    conf.set("io.serializations","org.apache.hadoop.io.serializer.JavaSerialization," + "org.apache.hadoop.io.serializer.WritableSerialization");
+	    conf.set("io.serializations", "org.apache.hadoop.io.serializer.JavaSerialization," + "org.apache.hadoop.io.serializer.WritableSerialization");
 	    
+	    // Configure the jobs main class, mapper and reducer
 	    Job job = new Job(conf, "WEKA-MapReduce");
 	    job.setJarByClass(Run.class);
 	    job.setMapperClass(WekaMap.class);
 	    job.setReducerClass(WekaReducer.class);
+	    
+	    // Start with 1
 	    job.setNumReduceTasks(1);
 	    
-	    //This sections set the values of the <K2, V2>
+	    // This section sets the values of the <K2, V2>
 	    job.setOutputKeyClass(Text.class);
 	    job.setOutputValueClass(weka.classifiers.trees.J48.class);
-	    	
 	    job.setOutputValueClass(AggregateableEvaluation.class);
 	    
-	    //Set the input and output directories
+	    // Set the input and output directories based on command line args
 	    FileInputFormat.addInputPath(job, new Path(args[2]));
 	    FileOutputFormat.setOutputPath(job, new Path(args[3]));
 	    
-	    //Set the input type of the environment
-	    //In this case we are overriding TextInputFormat
+	    // Set the input type of the environment
+	    // (In this case we are overriding TextInputFormat)
 	    job.setInputFormatClass(WekaInputFormat.class);
 	    
+	    // wait until the job is complete to exit
 	    System.exit(job.waitForCompletion(true) ? 0 : 1);
     }
 }
