@@ -1,6 +1,16 @@
 #!/bin/bash
+# Author: Trevor Hodde
+#
+# This script is responsible for the following:
+# 	- Upload the dataset to HDFS
+#	- Remove old data
+# 	- Update the classpath (if necessary)
+# 	- Compiles the sources
+# 	- Builds the JAR file to run the program
+# 	- Executes the program
+#
 
-declare -r DATASET=slug.arff
+declare -r DATASET=${1:-player_regular_season.txt}
 
 # Remove old data set
 echo "Removing old data set..."
