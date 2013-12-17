@@ -221,6 +221,11 @@ public class Run {
 		        opts[1] = "";
 		        opts[2] = "";
 	        }
+            else {
+                opts[0] = "";
+                opts[1] = "";
+                opts[2] = "";
+            }
 	      
 	        // Start setting up the classifier and its various options
 	        try {
