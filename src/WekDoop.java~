@@ -88,7 +88,7 @@ import org.apache.hadoop.mapreduce.InputSplit;
  * for getting input from the user, setting up the mapper and reducer,
  * organizing the weka input, etc.
  */
-public class Run {
+public class WekDoop {
 	public static class WekaInputFormat extends TextInputFormat {
 		/**
 		 * Takes a JobContext and returns a list of data split into pieces
@@ -150,7 +150,7 @@ public class Run {
 	    
 	    // TODO: Make sure this is not hard-coded -- preferably a command line arg
 	    // Set the classifier
-	    private String classname = "weka.classifiers.trees.J48";
+	    private String classname = "weka.classifiers.bayes.NaiveBayes";
 	    private int seed = 20;
 	    
 	    public void map(Object key, Text value, Context context) throws IOException, InterruptedException {
@@ -163,7 +163,6 @@ public class Run {
             FileSystem fileSystem = FileSystem.get(conf);
 
 			Path path = new Path("/home/ubuntu/Workspace/hadoop-1.1.0/hadoop-data/very_small_spam.arff");
-            //Path path = new Path(line);
 
             // Make sure the file exists...
             if (!fileSystem.exists(path)) {
@@ -194,7 +193,6 @@ public class Run {
 
 	        // Read in the data set
 	        context.setStatus("Reading in the arff file...");
-	        //readArff(fs, line);
 			readArff(fs, path.toString());
 	        context.setStatus("Done reading arff! Initializing aggregateable eval...");
 
@@ -314,8 +312,6 @@ public class Run {
 	    	  ArffReader arff;
 	    	  Instance inst;
 	    	  Instances data;
-	    		 
-		  	  System.out.println("filePath: " + filePath);
 	
 	    	  try {
 	    		  // Read in the data using a ton of wrappers
@@ -438,7 +434,7 @@ public class Run {
 	    
 		// Make sure we have the correct number of arguments passed into the program
 		if (args.length != 4) {
-	      System.err.println("Usage: run #splits classifier <input file> <output file>");
+	      System.err.println("Usage: WekDoop <# of splits> <classifier> <input file> <output file>");
 	      System.exit(1);
 	    }
 		
@@ -448,8 +444,9 @@ public class Run {
 	    conf.set("io.serializations", "org.apache.hadoop.io.serializer.JavaSerialization," + "org.apache.hadoop.io.serializer.WritableSerialization");
 	    
 	    // Configure the jobs main class, mapper and reducer
-	    Job job = new Job(conf, "WEKA-MapReduce");
-	    job.setJarByClass(Run.class);
+		// TODO: Make the Job name print the name of the currently running classifier
+	    Job job = new Job(conf, "WekDoop");
+	    job.setJarByClass(WekDoop.class);
 	    job.setMapperClass(WekaMap.class);
 	    job.setReducerClass(WekaReducer.class);
 	    
