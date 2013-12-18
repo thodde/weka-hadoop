@@ -1,0 +1,531 @@
+
+Task Logs: 'attempt_201311222233_0006_r_000000_0'
+
+
+stdout logs
+
+ Confusion Matrix ===
+
+   a   b   <-- classified as
+   0   0 |   a = 0
+   0 264 |   b = 1
+
+IN THE REDUCER!
+This is the map result
+=== Confusion Matrix ===
+
+   a   b   <-- classified as
+   0   0 |   a = 0
+   0 352 |   b = 1
+
+IN THE REDUCER!
+This is the map result
+=== Confusion Matrix ===
+
+   a   b   <-- classified as
+   0   0 |   a = 0
+   0 441 |   b = 1
+
+This is reduce matrix
+=== Confusion Matrix ===
+
+   a   b   <-- classified as
+   0   0 |   a = 0
+   0 441 |   b = 1
+
+The value of reduce time is: 2
+2013-12-18 18:32:09.404
+2013-12-18 18:32:09.405
+IN THE REDUCER!
+This is the map result
+=== Confusion Matrix ===
+
+  a  b   <-- classified as
+  0  0 |  a = 0
+  0 89 |  b = 1
+
+IN THE REDUCER!
+This is the map result
+=== Confusion Matrix ===
+
+   a   b   <-- classified as
+   0   0 |   a = 0
+   0 177 |   b = 1
+
+IN THE REDUCER!
+This is the map result
+=== Confusion Matrix ===
+
+   a   b   <-- classified as
+   0   0 |   a = 0
+   0 265 |   b = 1
+
+IN THE REDUCER!
+This is the map result
+=== Confusion Matrix ===
+
+   a   b   <-- classified as
+   0   0 |   a = 0
+   0 353 |   b = 1
+
+IN THE REDUCER!
+This is the map result
+=== Confusion Matrix ===
+
+   a   b   <-- classified as
+   0   0 |   a = 0
+   0 441 |   b = 1
+
+This is reduce matrix
+=== Confusion Matrix ===
+
+   a   b   <-- classified as
+   0   0 |   a = 0
+   0 441 |   b = 1
+
+The value of reduce time is: 2
+2013-12-18 18:32:09.407
+2013-12-18 18:32:09.407
+IN THE REDUCER!
+This is the map result
+=== Confusion Matrix ===
+
+  a  b   <-- classified as
+  0  0 |  a = 0
+  0 88 |  b = 1
+
+IN THE REDUCER!
+This is the map result
+=== Confusion Matrix ===
+
+   a   b   <-- classified as
+   0   0 |   a = 0
+   0 176 |   b = 1
+
+IN THE REDUCER!
+This is the map result
+=== Confusion Matrix ===
+
+   a   b   <-- classified as
+   0   0 |   a = 0
+   0 265 |   b = 1
+
+IN THE REDUCER!
+This is the map result
+=== Confusion Matrix ===
+
+   a   b   <-- classified as
+   0   0 |   a = 0
+   0 353 |   b = 1
+
+IN THE REDUCER!
+This is the map result
+=== Confusion Matrix ===
+
+   a   b   <-- classified as
+   0   0 |   a = 0
+   0 441 |   b = 1
+
+This is reduce matrix
+=== Confusion Matrix ===
+
+   a   b   <-- classified as
+   0   0 |   a = 0
+   0 441 |   b = 1
+
+The value of reduce time is: 2
+2013-12-18 18:32:09.41
+2013-12-18 18:32:09.41
+IN THE REDUCER!
+This is the map result
+=== Confusion Matrix ===
+
+  a  b   <-- classified as
+  0  0 |  a = 0
+  0 88 |  b = 1
+
+IN THE REDUCER!
+This is the map result
+=== Confusion Matrix ===
+
+   a   b   <-- classified as
+   0   0 |   a = 0
+   0 177 |   b = 1
+
+IN THE REDUCER!
+This is the map result
+=== Confusion Matrix ===
+
+   a   b   <-- classified as
+   0   0 |   a = 0
+   0 265 |   b = 1
+
+IN THE REDUCER!
+This is the map result
+=== Confusion Matrix ===
+
+   a   b   <-- classified as
+   0   0 |   a = 0
+   0 353 |   b = 1
+
+IN THE REDUCER!
+This is the map result
+=== Confusion Matrix ===
+
+   a   b   <-- classified as
+   0   0 |   a = 0
+   0 441 |   b = 1
+
+This is reduce matrix
+=== Confusion Matrix ===
+
+   a   b   <-- classified as
+   0   0 |   a = 0
+   0 441 |   b = 1
+
+The value of reduce time is: 4
+2013-12-18 18:32:09.414
+2013-12-18 18:32:09.414
+IN THE REDUCER!
+This is the map result
+=== Confusion Matrix ===
+
+  a  b   <-- classified as
+  0  0 |  a = 0
+  0 88 |  b = 1
+
+IN THE REDUCER!
+This is the map result
+=== Confusion Matrix ===
+
+   a   b   <-- classified as
+   0   0 |   a = 0
+   0 176 |   b = 1
+
+IN THE REDUCER!
+This is the map result
+=== Confusion Matrix ===
+
+   a   b   <-- classified as
+   0   0 |   a = 0
+   0 264 |   b = 1
+
+IN THE REDUCER!
+This is the map result
+=== Confusion Matrix ===
+
+   a   b   <-- classified as
+   0   0 |   a = 0
+   0 353 |   b = 1
+
+IN THE REDUCER!
+This is the map result
+=== Confusion Matrix ===
+
+   a   b   <-- classified as
+   0   0 |   a = 0
+   0 441 |   b = 1
+
+This is reduce matrix
+=== Confusion Matrix ===
+
+   a   b   <-- classified as
+   0   0 |   a = 0
+   0 441 |   b = 1
+
+The value of reduce time is: 2
+2013-12-18 18:32:09.416
+2013-12-18 18:32:09.417
+IN THE REDUCER!
+This is the map result
+=== Confusion Matrix ===
+
+  a  b   <-- classified as
+  0  0 |  a = 0
+  0 88 |  b = 1
+
+IN THE REDUCER!
+This is the map result
+=== Confusion Matrix ===
+
+   a   b   <-- classified as
+   0   0 |   a = 0
+   0 176 |   b = 1
+
+IN THE REDUCER!
+This is the map result
+=== Confusion Matrix ===
+
+   a   b   <-- classified as
+   0   0 |   a = 0
+   0 264 |   b = 1
+
+IN THE REDUCER!
+This is the map result
+=== Confusion Matrix ===
+
+   a   b   <-- classified as
+   0   0 |   a = 0
+   0 352 |   b = 1
+
+IN THE REDUCER!
+This is the map result
+=== Confusion Matrix ===
+
+   a   b   <-- classified as
+   0   0 |   a = 0
+   0 441 |   b = 1
+
+This is reduce matrix
+=== Confusion Matrix ===
+
+   a   b   <-- classified as
+   0   0 |   a = 0
+   0 441 |   b = 1
+
+The value of reduce time is: 2
+2013-12-18 18:32:09.419
+2013-12-18 18:32:09.42
+IN THE REDUCER!
+This is the map result
+=== Confusion Matrix ===
+
+  a  b   <-- classified as
+  0  0 |  a = 0
+  0 89 |  b = 1
+
+IN THE REDUCER!
+This is the map result
+=== Confusion Matrix ===
+
+   a   b   <-- classified as
+   0   0 |   a = 0
+   0 177 |   b = 1
+
+IN THE REDUCER!
+This is the map result
+=== Confusion Matrix ===
+
+   a   b   <-- classified as
+   0   0 |   a = 0
+   0 265 |   b = 1
+
+IN THE REDUCER!
+This is the map result
+=== Confusion Matrix ===
+
+   a   b   <-- classified as
+   0   0 |   a = 0
+   0 353 |   b = 1
+
+IN THE REDUCER!
+This is the map result
+=== Confusion Matrix ===
+
+   a   b   <-- classified as
+   0   0 |   a = 0
+   0 441 |   b = 1
+
+This is reduce matrix
+=== Confusion Matrix ===
+
+   a   b   <-- classified as
+   0   0 |   a = 0
+   0 441 |   b = 1
+
+The value of reduce time is: 4
+2013-12-18 18:32:09.424
+2013-12-18 18:32:09.424
+IN THE REDUCER!
+This is the map result
+=== Confusion Matrix ===
+
+  a  b   <-- classified as
+  0  0 |  a = 0
+  0 88 |  b = 1
+
+IN THE REDUCER!
+This is the map result
+=== Confusion Matrix ===
+
+   a   b   <-- classified as
+   0   0 |   a = 0
+   0 176 |   b = 1
+
+IN THE REDUCER!
+This is the map result
+=== Confusion Matrix ===
+
+   a   b   <-- classified as
+   0   0 |   a = 0
+   0 265 |   b = 1
+
+IN THE REDUCER!
+This is the map result
+=== Confusion Matrix ===
+
+   a   b   <-- classified as
+   0   0 |   a = 0
+   0 353 |   b = 1
+
+IN THE REDUCER!
+This is the map result
+=== Confusion Matrix ===
+
+   a   b   <-- classified as
+   0   0 |   a = 0
+   0 441 |   b = 1
+
+This is reduce matrix
+=== Confusion Matrix ===
+
+   a   b   <-- classified as
+   0   0 |   a = 0
+   0 441 |   b = 1
+
+The value of reduce time is: 2
+2013-12-18 18:32:09.426
+2013-12-18 18:32:09.427
+IN THE REDUCER!
+This is the map result
+=== Confusion Matrix ===
+
+  a  b   <-- classified as
+  0  0 |  a = 0
+  0 88 |  b = 1
+
+IN THE REDUCER!
+This is the map result
+=== Confusion Matrix ===
+
+   a   b   <-- classified as
+   0   0 |   a = 0
+   0 177 |   b = 1
+
+IN THE REDUCER!
+This is the map result
+=== Confusion Matrix ===
+
+   a   b   <-- classified as
+   0   0 |   a = 0
+   0 265 |   b = 1
+
+IN THE REDUCER!
+This is the map result
+=== Confusion Matrix ===
+
+   a   b   <-- classified as
+   0   0 |   a = 0
+   0 353 |   b = 1
+
+IN THE REDUCER!
+This is the map result
+=== Confusion Matrix ===
+
+   a   b   <-- classified as
+   0   0 |   a = 0
+   0 441 |   b = 1
+
+This is reduce matrix
+=== Confusion Matrix ===
+
+   a   b   <-- classified as
+   0   0 |   a = 0
+   0 441 |   b = 1
+
+The value of reduce time is: 2
+2013-12-18 18:32:09.429
+2013-12-18 18:32:09.43
+IN THE REDUCER!
+This is the map result
+=== Confusion Matrix ===
+
+  a  b   <-- classified as
+  0  0 |  a = 0
+  0 88 |  b = 1
+
+IN THE REDUCER!
+This is the map result
+=== Confusion Matrix ===
+
+   a   b   <-- classified as
+   0   0 |   a = 0
+   0 177 |   b = 1
+
+IN THE REDUCER!
+This is the map result
+=== Confusion Matrix ===
+
+   a   b   <-- classified as
+   0   0 |   a = 0
+   0 265 |   b = 1
+
+IN THE REDUCER!
+This is the map result
+=== Confusion Matrix ===
+
+   a   b   <-- classified as
+   0   0 |   a = 0
+   0 353 |   b = 1
+
+IN THE REDUCER!
+This is the map result
+=== Confusion Matrix ===
+
+   a   b   <-- classified as
+   0   0 |   a = 0
+   0 441 |   b = 1
+
+This is reduce matrix
+=== Confusion Matrix ===
+
+   a   b   <-- classified as
+   0   0 |   a = 0
+   0 441 |   b = 1
+
+The value of reduce time is: 7
+2013-12-18 18:32:09.437
+
+
+
+stderr logs
+
+
+
+syslog logs
+
+2013-12-18 18:31:30,486 INFO org.apache.hadoop.util.NativeCodeLoader: Loaded the native-hadoop library
+2013-12-18 18:31:30,789 WARN org.apache.hadoop.metrics2.impl.MetricsSystemImpl: Source name ugi already exists!
+2013-12-18 18:31:30,933 INFO org.apache.hadoop.util.ProcessTree: setsid exited with exit code 0
+2013-12-18 18:31:30,943 INFO org.apache.hadoop.mapred.Task:  Using ResourceCalculatorPlugin : org.apache.hadoop.util.LinuxResourceCalculatorPlugin@17f212b
+2013-12-18 18:31:31,033 INFO org.apache.hadoop.mapred.ReduceTask: ShuffleRamManager: MemoryLimit=141937872, MaxSingleShuffleLimit=35484468
+2013-12-18 18:31:31,047 INFO org.apache.hadoop.mapred.ReduceTask: attempt_201311222233_0006_r_000000_0 Need another 5 map output(s) where 0 is already in progress
+2013-12-18 18:31:31,047 INFO org.apache.hadoop.mapred.ReduceTask: attempt_201311222233_0006_r_000000_0 Scheduled 0 outputs (0 slow hosts and0 dup hosts)
+2013-12-18 18:31:31,042 INFO org.apache.hadoop.mapred.ReduceTask: attempt_201311222233_0006_r_000000_0 Thread started: Thread for merging on-disk files
+2013-12-18 18:31:31,054 INFO org.apache.hadoop.mapred.ReduceTask: attempt_201311222233_0006_r_000000_0 Thread waiting: Thread for merging on-disk files
+2013-12-18 18:31:31,046 INFO org.apache.hadoop.mapred.ReduceTask: attempt_201311222233_0006_r_000000_0 Thread started: Thread for merging in memory files
+2013-12-18 18:31:31,054 INFO org.apache.hadoop.mapred.ReduceTask: attempt_201311222233_0006_r_000000_0 Thread started: Thread for polling Map Completion Events
+2013-12-18 18:31:36,047 INFO org.apache.hadoop.mapred.ReduceTask: attempt_201311222233_0006_r_000000_0 Scheduled 1 outputs (0 slow hosts and0 dup hosts)
+2013-12-18 18:31:36,250 INFO org.apache.hadoop.mapred.ReduceTask: attempt_201311222233_0006_r_000000_0 Scheduled 1 outputs (0 slow hosts and0 dup hosts)
+2013-12-18 18:31:41,367 INFO org.apache.hadoop.mapred.ReduceTask: attempt_201311222233_0006_r_000000_0 Scheduled 1 outputs (0 slow hosts and0 dup hosts)
+2013-12-18 18:31:51,471 INFO org.apache.hadoop.mapred.ReduceTask: attempt_201311222233_0006_r_000000_0 Scheduled 1 outputs (0 slow hosts and0 dup hosts)
+2013-12-18 18:32:06,564 INFO org.apache.hadoop.mapred.ReduceTask: attempt_201311222233_0006_r_000000_0 Scheduled 1 outputs (0 slow hosts and0 dup hosts)
+2013-12-18 18:32:07,211 INFO org.apache.hadoop.mapred.ReduceTask: GetMapEventsThread exiting
+2013-12-18 18:32:07,212 INFO org.apache.hadoop.mapred.ReduceTask: getMapsEventsThread joined.
+2013-12-18 18:32:07,212 INFO org.apache.hadoop.mapred.ReduceTask: Closed ram manager
+2013-12-18 18:32:07,212 INFO org.apache.hadoop.mapred.ReduceTask: Interleaved on-disk merge complete: 0 files left.
+2013-12-18 18:32:07,213 INFO org.apache.hadoop.mapred.ReduceTask: In-memory merge complete: 5 files left.
+2013-12-18 18:32:07,326 INFO org.apache.hadoop.mapred.Merger: Merging 5 sorted segments
+2013-12-18 18:32:07,326 INFO org.apache.hadoop.mapred.Merger: Down to the last merge-pass, with 5 segments left of total size: 55567770 bytes
+2013-12-18 18:32:07,677 INFO org.apache.hadoop.mapred.ReduceTask: Merged 5 segments, 55567770 bytes to disk to satisfy reduce memory limit
+2013-12-18 18:32:07,688 INFO org.apache.hadoop.mapred.ReduceTask: Merging 1 files, 55567766 bytes from disk
+2013-12-18 18:32:07,699 INFO org.apache.hadoop.mapred.ReduceTask: Merging 0 segments, 0 bytes from memory into reduce
+2013-12-18 18:32:07,699 INFO org.apache.hadoop.mapred.Merger: Merging 1 sorted segments
+2013-12-18 18:32:07,704 INFO org.apache.hadoop.mapred.Merger: Down to the last merge-pass, with 1 segments left of total size: 55567762 bytes
+2013-12-18 18:32:09,474 INFO org.apache.hadoop.mapred.Task: Task:attempt_201311222233_0006_r_000000_0 is done. And is in the process of commiting
+2013-12-18 18:32:10,492 INFO org.apache.hadoop.mapred.Task: Task attempt_201311222233_0006_r_000000_0 is allowed to commit now
+2013-12-18 18:32:10,497 INFO org.apache.hadoop.mapreduce.lib.output.FileOutputCommitter: Saved output of task 'attempt_201311222233_0006_r_000000_0' to /home/ubuntu/Workspace/hadoop-1.1.0/hadoop-data/output
+2013-12-18 18:32:10,499 INFO org.apache.hadoop.mapred.Task: Task 'attempt_201311222233_0006_r_000000_0' done.
+
+
+

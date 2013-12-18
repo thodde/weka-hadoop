@@ -85,4 +85,4 @@ pushd src/
 echo "Executing program."
 chmod +x weka-test.jar
 # Run the JAR here? Just don't lost this command...
-hadoop jar weka-test.jar Run 10 weka.classifiers.bayes.NaiveBayes /home/ubuntu/Workspace/hadoop-1.1.0/hadoop-data/$DATASET /home/ubuntu/Workspace/hadoop-1.1.0/hadoop-data/output/ 
+hadoop jar weka-test.jar Run 5 weka.classifiers.lazy.IBk /home/ubuntu/Workspace/hadoop-1.1.0/hadoop-data/$DATASET /home/ubuntu/Workspace/hadoop-1.1.0/hadoop-data/output/ 

@@ -150,7 +150,7 @@ public class Run {
 	    
 	    // TODO: Make sure this is not hard-coded -- preferably a command line arg
 	    // Set the classifier
-	    private String classname = "weka.classifiers.bayes.NaiveBayes";
+	    private String classname = "weka.classifiers.trees.J48";
 	    private int seed = 20;
 	    
 	    public void map(Object key, Text value, Context context) throws IOException, InterruptedException {
@@ -162,7 +162,7 @@ public class Run {
             Configuration conf = new Configuration();
             FileSystem fileSystem = FileSystem.get(conf);
 
-			Path path = new Path("/home/ubuntu/Workspace/hadoop-1.1.0/hadoop-data/spambase_processed.arff");
+			Path path = new Path("/home/ubuntu/Workspace/hadoop-1.1.0/hadoop-data/very_small_spam.arff");
             //Path path = new Path(line);
 
             // Make sure the file exists...
@@ -271,7 +271,7 @@ public class Run {
 		        afterEvalClass = System.currentTimeMillis();
 		        System.out.println(new Timestamp(System.currentTimeMillis()));
 
-		        // We are done!
+		        // We are done this iteration!
 		        context.setStatus("Complete");
 	        }
 	        catch (Exception e) {
