@@ -155,6 +155,9 @@ public class Run {
 	    
 	    public void map(Object key, Text value, Context context) throws IOException, InterruptedException {
 	        String line = value.toString();
+			System.out.println("CURRENT LINE: " + line);
+
+			//line = "/home/ubuntu/Workspace/hadoop-1.1.0/hadoop-data/spambase_processed.arff";
 	      
             Configuration conf = new Configuration();
             FileSystem fileSystem = FileSystem.get(conf);
@@ -191,7 +194,8 @@ public class Run {
 
 	        // Read in the data set
 	        context.setStatus("Reading in the arff file...");
-	        readArff(fs, line);
+	        //readArff(fs, line);
+			readArff(fs, path.toString());
 	        context.setStatus("Done reading arff! Initializing aggregateable eval...");
 
             try {
@@ -281,7 +285,7 @@ public class Run {
 	        long evalTime = afterEvalClass - beforeEvalClass;
 	      
 	        // Print out the times
-	        System.out.println("The value of abstract time: " + abstractTime);
+	        System.out.println("The value of creation time: " + abstractTime);
 	        System.out.println("The value of Build time: " + buildTime);
 	        System.out.println("The value of Eval time: " + evalTime);
 	          
