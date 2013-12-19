@@ -10,7 +10,7 @@
 # 	- Executes the program
 #
 
-declare DATASET=${1:-small_spam.arff}
+declare DATASET=${1:-very_small_spam.arff}
 declare OVERWRITE=${2:-0}
 declare data_exists=1
 
@@ -85,4 +85,4 @@ pushd src/
 echo "Executing program."
 chmod +x WekDoop.jar
 # Run the JAR here? Just don't lost this command...
-hadoop jar WekDoop.jar WekDoop 5 weka.classifiers.trees.J48 /home/ubuntu/Workspace/hadoop-1.1.0/hadoop-data/$DATASET /home/ubuntu/Workspace/hadoop-1.1.0/hadoop-data/output/ 
+hadoop jar WekDoop.jar WekDoop 10 weka.classifiers.trees.J48 /home/ubuntu/Workspace/hadoop-1.1.0/hadoop-data/$DATASET /home/ubuntu/Workspace/hadoop-1.1.0/hadoop-data/output/ 
